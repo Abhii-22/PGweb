@@ -1,0 +1,30 @@
+.landing-header {
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+
+.login-btn {
+  padding: 0.75rem 2rem;
+  background: #4F46E5;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
+}
+
+.login-btn:hover {
+  background: #4338CA;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}

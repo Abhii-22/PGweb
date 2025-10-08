@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.landing-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+}
+
+.content-section {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5rem;
+  animation: slideInFromLeft 1s ease-out;
+}
+
+.content-section h1 {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.content-section p {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin-bottom: 3rem;
+  max-width: 550px;
+}
+
+.enter-btn {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, #4F46E5, #818CF8);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+}
+
+.enter-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 25px rgba(79, 70, 229, 0.35);
+}
+
+.image-section {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f5;
+  clip-path: ellipse(100% 100% at 100% 50%);
+  animation: slideInFromRight 1s ease-out;
+}
+
+.landing-image {
+  position: absolute;
+  max-width: 55%;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s ease-in-out;
+}
+
+.image-1 {
+  transform: rotate(-12deg) translate(-25%, -15%);
+  z-index: 1;
+}
+
+.image-2 {
+  transform: rotate(8deg) translate(25%, 0%);
+  z-index: 2;
+}
+
+.image-3 {
+  transform: rotate(22deg) translate(-5%, 35%);
+  z-index: 3;
+}
+
+.image-section:hover .landing-image {
+  transform: rotate(0) scale(1.08);
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}

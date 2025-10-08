@@ -1,0 +1,102 @@
+.uploaded-pgs-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.uploaded-pgs-container h2 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pg-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.pg-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pg-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.pg-card h3 {
+  font-size: 1.4rem;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.pg-address {
+  font-size: 0.95rem;
+  color: #718096;
+  margin-bottom: 1rem;
+}
+
+.pg-rent {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4F46E5;
+  margin-bottom: 1.5rem;
+}
+
+.image-previews {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.image-previews img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.card-actions button {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #818CF8;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #6366F1;
+}
+
+.delete-btn {
+  background-color: #F87171;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #EF4444;
+}
