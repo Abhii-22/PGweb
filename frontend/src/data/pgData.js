@@ -1,7 +1,7 @@
 const areasData = [
   {
     name: 'Vijayanagar',
-    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/originals/3e/d2/cb/3ed2cb4be4d132011530d609fc42fa25.jpg',
     features: ['Cultural Hub', 'Traditional Eateries', 'Proximity to Metro'],
     famous: ['Vijayanagar Metro Station', 'Attiguppe Market', 'Veeresh Theatre'],
     pgs: [
@@ -18,7 +18,7 @@ const areasData = [
   },
   {
     name: 'Koramangala',
-    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80',
+    image: 'https://www.nobroker.in/blog/wp-content/uploads/2023/02/3.-Forum-Sujana-Mall-Kukatpally-2.jpg',
     features: ['Vibrant Nightlife', 'Startup Hub', 'Luxury Dining'],
     famous: ['Forum Mall', 'Ooty Chocolates', 'The Black Pearl Restaurant'],
     pgs: [
@@ -37,7 +37,7 @@ const areasData = [
   },
   {
     name: 'HSR Layout',
-    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80',
+    image: 'https://www.colive.com/blog/wp-content/uploads/2023/03/Coliving-PGs-in-HSR-Layout-756x420.png',
     features: ['Well-Planned Layout', 'Numerous Parks', 'Quiet Residential Area'],
     famous: ['HSR BDA Complex', 'Agara Lake', 'Central Mall'],
     pgs: [
@@ -55,7 +55,7 @@ const areasData = [
   },
   {
     name: 'Marathahalli',
-    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80',
+    image: 'https://www.bagmanegroup.com/media/filer_public/f1/e8/f1e873e7-82da-47f6-a74d-279af55f82ae/tech_park_banner.png',
     features: ['IT Hub', 'Affordable Living', 'Excellent Connectivity'],
     famous: ['Innovative Multiplex', 'Marathahalli Bridge', 'Brand Factory'],
     pgs: [

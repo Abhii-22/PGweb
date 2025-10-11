@@ -44,7 +44,11 @@ const PgForm = () => {
     }
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { 'image/*': ['.jpg', '.jpeg', '.png', '.gif', '.webp'] },
+    multiple: true
+  });
 
   const removeImage = (index) => {
     setForm(prevForm => ({

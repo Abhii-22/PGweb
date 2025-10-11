@@ -13,6 +13,8 @@ import Dashboard from "./components/PGowner/Dashboard.jsx";
 import PgForm from "./components/PGowner/PgForm.jsx";
 import UploadedPgs from "./components/PGowner/UploadedPgs.jsx";
 import Profile from "./components/PGowner/Profile.jsx";
+import TenantForm from "./components/PGowner/TenantForm.jsx";
+
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
       <Route path="/pg-owner/pg-form" element={<PgForm />} />
             <Route path="/pg-owner/uploaded-form" element={<UploadedPgs />} />
       <Route path="/pg-owner/profile" element={<Profile />} />
+      <Route path="/pg-owner/tenant-form" element={<TenantForm />} />
+      
     </Routes>
   );
 }

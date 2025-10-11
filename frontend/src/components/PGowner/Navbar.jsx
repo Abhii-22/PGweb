@@ -19,6 +19,9 @@ const Navbar = () => {
           <Link to="/pg-owner/uploaded-form">Uploaded Form</Link>
         </li>
         <li>
+          <Link to="/pg-owner/tenant-form">Add Tenant</Link>
+        </li>
+        <li>
           <Link to="/pg-owner/profile">Profile</Link>
         </li>
       </ul>

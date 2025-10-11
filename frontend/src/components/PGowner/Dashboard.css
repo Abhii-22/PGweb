@@ -1,20 +1,133 @@
+/* General Layout */
 .dashboard-layout {
   display: flex;
+  background-color: #f0f2f5;
+  min-height: 100vh;
 }
 
-.dashboard-content {
-  margin-left: 250px; /* Same as navbar width */
-  padding: 20px;
-  width: 100%;
+.dashboard-main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  margin-left: 250px; /* Adjust if your navbar width is different */
+  transition: margin-left 0.3s ease;
 }
 
-.dashboard-content h1 {
-  font-size: 2.5rem;
-  color: #2d3748;
-  margin-bottom: 1rem;
+/* Header */
+.dashboard-header {
+  margin-bottom: 2rem;
 }
 
-.dashboard-content p {
-  font-size: 1.1rem;
+.dashboard-header h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: #718096;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.5s ease-out forwards;
+  animation-delay: var(--animation-delay);
+  opacity: 0;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  font-size: 1rem;
   color: #4a5568;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+}
+
+.stat-card .stat-change {
+  font-size: 0.9rem;
+}
+
+.stat-change.increase {
+  color: #38a169; /* Green */
+}
+
+.stat-change.decrease {
+  color: #e53e3e; /* Red */
+}
+
+/* Tenant List Section */
+.tenant-list-section {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tenant-list-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+
+.tenant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.tenant-table th,
+.tenant-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.tenant-table th {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  background-color: #f7fafc;
+}
+
+.tenant-table tbody tr:hover {
+  background-color: #f7fafc;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

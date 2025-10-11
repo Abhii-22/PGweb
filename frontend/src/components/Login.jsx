@@ -15,23 +15,42 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.userType === 'pgOwner') {
       const owner = pgOwnerCredentials.find(
         (cred) => cred.email === formData.email && cred.password === formData.password
       );
-
       if (owner) {
-        // Redirect to PG Owner Dashboard
         navigate('/pg-owner/dashboard');
-      } else {
-        alert('Invalid credentials for PG Owner');
+        return;
       }
-    } else {
-      // For now, we'll just redirect to the home page on submit for users.
-      console.log(formData);
-      navigate('/home');
+      // Record failed owner login attempt as well
+      try {
+        await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, password: formData.password, userType: 'pgOwner' })
+        });
+      } catch (err) { /* ignore */ }
+      alert('Invalid credentials for PG Owner');
+      return;
+    }
+    // user login should be stored; call backend endpoint
+    try {
+      const resp = await fetch('http://localhost:5000/api/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email, password: formData.password })
+      });
+      if (resp.ok) {
+        navigate('/home');
+      } else {
+        const data = await resp.json().catch(() => ({}));
+        alert(data.message || 'User login failed');
+      }
+    } catch (err) {
+      alert('User login failed');
     }
   };
 

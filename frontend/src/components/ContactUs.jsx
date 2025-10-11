@@ -17,16 +17,16 @@ const ContactUs = () => {
         {/* Card 2: Contact Details */}
         <div className="contact-card">
           <h5>Get in Touch</h5>
-          <div class="contact-item">
-            <i class="bi bi-telephone-fill"></i>
+          <div className="contact-item">
+            <i className="bi bi-telephone-fill"></i>
             <span><strong>+91 7483198135</strong></span>
           </div>
-          <a href="https://wa.me/917483198135" target="_blank" rel="noopener noreferrer" class="contact-item">
-            <i class="bi bi-whatsapp"></i>
+          <a href="https://wa.me/917483198135" target="_blank" rel="noopener noreferrer" className="contact-item">
+            <i className="bi bi-whatsapp"></i>
             <span><strong>Chat on WhatsApp</strong></span>
           </a>
-          <div class="contact-item">
-            <i class="bi bi-geo-alt-fill"></i>
+          <div className="contact-item">
+            <i className="bi bi-geo-alt-fill"></i>
             <span><strong>#89, 18th main, 15th Cross, Near Post office, MRCR Layout, Vijayanagar, Bangalore</strong></span>
           </div>
         </div>
