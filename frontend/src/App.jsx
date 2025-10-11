@@ -14,10 +14,12 @@ import PgForm from "./components/PGowner/PgForm.jsx";
 import UploadedPgs from "./components/PGowner/UploadedPgs.jsx";
 import Profile from "./components/PGowner/Profile.jsx";
 import TenantForm from "./components/PGowner/TenantForm.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
 
 
 function App() {
   return (
+    <UserProvider>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
@@ -34,6 +36,7 @@ function App() {
       <Route path="/pg-owner/tenant-form" element={<TenantForm />} />
       
     </Routes>
+    </UserProvider>
   );
 }
 

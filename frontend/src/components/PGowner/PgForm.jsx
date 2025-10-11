@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext.jsx';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import areasData from '../../data/pgData.js';
@@ -8,6 +9,7 @@ import { motion } from 'framer-motion';
 
 const PgForm = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [form, setForm] = useState({
     name: '',
     images: [],
@@ -70,7 +72,8 @@ const PgForm = () => {
       ...form,
       facilities: Array.isArray(form.facilities) ? form.facilities : form.facilities.split(',').map(s => s.trim()),
       price: Number(form.price),
-      rating: Number(form.rating)
+      rating: Number(form.rating),
+      ownerEmail: user.email,
     };
 
     try {

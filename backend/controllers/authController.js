@@ -1,67 +1,146 @@
-const Login = require('../models/Login');
+const PgOwner = require('../models/PgOwner');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
-// @desc    Login for PG Owners
-// @route   POST /api/login
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, 'your_jwt_secret', { // Replace 'your_jwt_secret' with an environment variable
+    expiresIn: '30d',
+  });
+};
+
+// @desc    Register a new PG owner
+// @route   POST /api/auth/register
 // @access  Public
-const loginOwner = async (req, res) => {
+const register = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password, userType } = req.body || {};
-    if (userType !== 'pgOwner') {
-      try { await Login.create({ email, userType, success: false }); } catch (_) {}
-      return res.status(400).json({ message: 'Unsupported user type' });
+    let owner = await PgOwner.findOne({ email });
+
+    if (owner) {
+      return res.status(400).json({ message: 'User already exists' });
     }
-    const owners = [
-      { email: 'owner1@example.com', password: 'password1' },
-      { email: 'owner2@example.com', password: 'password2' },
-      { email: 'owner3@example.com', password: 'password3' },
-      { email: 'owner4@example.com', password: 'password4' },
-      { email: 'owner5@example.com', password: 'password5' },
-      { email: 'owner6@example.com', password: 'password6' },
-      { email: 'owner7@example.com', password: 'password7' },
-      { email: 'owner8@example.com', password: 'password8' },
-      { email: 'owner9@example.com', password: 'password9' },
-      { email: 'owner10@example.com', password: 'password10' },
-    ];
-    const ok = owners.find(o => o.email === email && o.password === password);
-    if (!ok) {
-      try { await Login.create({ email, userType, success: false }); } catch (_) {}
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-    try { await Login.create({ email, userType, success: true }); } catch (_) {}
-    return res.status(200).json({ message: 'Login successful' });
+
+    owner = new PgOwner({
+      email,
+      password,
+    });
+
+    await owner.save();
+
+    const token = generateToken(owner._id);
+
+    res.status(201).json({
+      _id: owner._id,
+      email: owner.email,
+      token,
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error });
   }
 };
 
-// @desc    Login for Users
-// @route   POST /api/user/login
+// @desc    Login a PG owner
+// @route   POST /api/auth/login
+// @access  Public
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const owner = await PgOwner.findOne({ email }).select('+password');
+
+    if (!owner) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await owner.matchPassword(password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const token = generateToken(owner._id);
+
+    res.status(200).json({
+      _id: owner._id,
+      email: owner.email,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+// @desc    Register a new User
+// @route   POST /api/auth/register/user
+// @access  Public
+const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    user = new User({
+      name,
+      email,
+      password,
+    });
+
+    await user.save();
+
+    const token = generateToken(user._id);
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+// @desc    Login a User
+// @route   POST /api/auth/login/user
 // @access  Public
 const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body || {};
-    if (!email || !password) {
-      try { await Login.create({ email, userType: 'user', success: false }); } catch (_) {}
-      return res.status(400).json({ message: 'Email and password are required' });
-    }
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
+
     if (!user) {
-      // Create a simple user record on first login
-      user = await User.create({ email, password });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
-    const success = user && user.password === password;
-    try { await Login.create({ email, userType: 'user', success }); } catch (_) {}
-    if (!success) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+
+    const isMatch = await user.matchPassword(password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
-    return res.status(200).json({ message: 'Login successful', email: user.email });
+
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token,
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error });
   }
 };
 
 module.exports = {
-  loginOwner,
+  register,
+  login,
+  registerUser,
   loginUser,
 };

@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './UploadedPgs.css';
+import { UserContext } from '../../context/UserContext.jsx';
 
 const UploadedPgs = () => {
+  const { user } = useContext(UserContext);
   const [pgs, setPgs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPgs = async () => {
+      if (!user) return;
       try {
-        const response = await axios.get('http://localhost:5000/api/pgs');
+        const response = await axios.get(`http://localhost:5000/api/pgs/my-pgs?email=${user.email}`);
         setPgs(response.data);
         setLoading(false);
       } catch (err) {
@@ -20,7 +23,7 @@ const UploadedPgs = () => {
     };
 
     fetchPgs();
-  }, []);
+  }, [user]);
 
   const handleDelete = async (id) => {
     try {

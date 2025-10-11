@@ -10,7 +10,8 @@ const pgSchema = new mongoose.Schema({
   location: String,
   description: String,
   facilities: [String],
-  area: String
+  area: String,
+  ownerEmail: { type: String, required: true, index: true }
 });
 
 const Pg = mongoose.model('Pg', pgSchema);

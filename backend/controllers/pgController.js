@@ -49,9 +49,22 @@ const deletePg = async (req, res) => {
   }
 };
 
+// @desc    Get logged in user pgs
+// @route   GET /api/pgs/my-pgs
+// @access  Private
+const getMyPgs = async (req, res) => {
+  try {
+    const pgs = await Pg.find({ ownerEmail: req.query.email });
+    res.json(pgs);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
 module.exports = {
   getPgs,
   createPg,
   updatePg,
   deletePg,
+  getMyPgs,
 };

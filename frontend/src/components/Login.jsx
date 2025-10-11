@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
-import pgOwnerCredentials from './pgOwnerCredentials';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext.jsx';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
     userType: 'user',
   });
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,39 +20,34 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.userType === 'pgOwner') {
-      const owner = pgOwnerCredentials.find(
-        (cred) => cred.email === formData.email && cred.password === formData.password
-      );
-      if (owner) {
-        navigate('/pg-owner/dashboard');
-        return;
-      }
-      // Record failed owner login attempt as well
       try {
-        await fetch('http://localhost:5000/api/login', {
+        const response = await axios.post('http://localhost:5000/api/auth/login', {
+          email: formData.email,
+          password: formData.password,
+        });
+        setUser(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        navigate('/pg-owner/dashboard');
+      } catch (error) {
+        alert(error.response?.data?.message || 'Login failed');
+      }
+    } else {
+      // User login logic remains unchanged for now
+      try {
+        const resp = await fetch('http://localhost:5000/api/user/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: formData.email, password: formData.password, userType: 'pgOwner' })
+          body: JSON.stringify({ email: formData.email, password: formData.password })
         });
-      } catch (err) { /* ignore */ }
-      alert('Invalid credentials for PG Owner');
-      return;
-    }
-    // user login should be stored; call backend endpoint
-    try {
-      const resp = await fetch('http://localhost:5000/api/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email, password: formData.password })
-      });
-      if (resp.ok) {
-        navigate('/home');
-      } else {
-        const data = await resp.json().catch(() => ({}));
-        alert(data.message || 'User login failed');
+        if (resp.ok) {
+          navigate('/home');
+        } else {
+          const data = await resp.json().catch(() => ({}));
+          alert(data.message || 'User login failed');
+        }
+      } catch (err) {
+        alert('User login failed');
       }
-    } catch (err) {
-      alert('User login failed');
     }
   };
 

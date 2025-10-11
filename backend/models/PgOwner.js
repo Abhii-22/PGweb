@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please add a name']
-  },
+const PgOwnerSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Please add an email'],
@@ -28,7 +24,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Encrypt password using bcrypt
-UserSchema.pre('save', async function(next) {
+PgOwnerSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -38,10 +34,8 @@ UserSchema.pre('save', async function(next) {
 });
 
 // Match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async function(enteredPassword) {
+PgOwnerSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model('User', UserSchema);
-
-
+module.exports = mongoose.model('PgOwner', PgOwnerSchema);
