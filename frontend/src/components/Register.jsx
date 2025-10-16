@@ -55,7 +55,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const apiBaseUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiBaseUrl}/register`, {
+      const response = await fetch(`${apiBaseUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

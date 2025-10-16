@@ -23,7 +23,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const corsOptions = {
   origin: [
     'http://localhost:5173',  // Local development
-    'https://p-gweb-tgya.vercel.app/'  // Production Vercel frontend
+    'https://p-gweb-tgya.vercel.app'  // Production Vercel frontend
   ],
   credentials: true
 };
