@@ -25,8 +25,19 @@ const TenantForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || !user._id) {
+      alert('You must be logged in to add a tenant.');
+      return;
+    }
+
+    const tenantData = {
+      ...formData,
+      pgOwner: user._id,
+    };
+
     try {
-      await axios.post('http://localhost:5000/api/tenants', formData);
+      await axios.post('http://localhost:5000/api/tenants', tenantData);
       alert('Tenant details submitted successfully!');
       setFormData({ name: '', email: '', phoneNumber: '', aadharCard: '', sharing: '', amount: '', date: '' });
       setStep(1);

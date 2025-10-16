@@ -5,7 +5,14 @@ const Tenant = require('../models/Tenant');
 // @access  Private
 exports.getTenants = async (req, res) => {
   try {
-    const tenants = await Tenant.find().sort({ createdAt: -1 });
+    const { pgOwnerId } = req.query;
+    console.log('Fetching tenants for pgOwnerId:', pgOwnerId); // Debugging log
+
+    if (!pgOwnerId) {
+      console.log('No pgOwnerId provided, returning empty list.');
+      return res.json([]); // Return empty array if no ID is provided
+    }
+    const tenants = await Tenant.find({ pgOwner: pgOwnerId }).sort({ createdAt: -1 });
     res.json(tenants);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
@@ -16,8 +23,20 @@ exports.getTenants = async (req, res) => {
 // @route   POST /api/tenants
 // @access  Private
 exports.createTenant = async (req, res) => {
+  const { name, email, phoneNumber, aadharCard, sharing, amount, date, pgOwner } = req.body;
+
   try {
-    const newTenant = new Tenant(req.body);
+    const newTenant = new Tenant({
+      name,
+      email,
+      phoneNumber,
+      aadharCard,
+      sharing,
+      amount,
+      date,
+      pgOwner, // This ensures the owner ID is saved
+    });
+
     await newTenant.save();
     res.status(201).json(newTenant);
   } catch (error) {

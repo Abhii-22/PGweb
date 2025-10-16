@@ -9,7 +9,12 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTenants = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/tenants');
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user._id) {
+          console.error('No user ID found in local storage');
+          return;
+        }
+        const response = await axios.get(`http://localhost:5000/api/tenants?pgOwnerId=${user._id}`);
         setTenants(response.data);
       } catch (error) {
         console.error('Failed to fetch tenants:', error);

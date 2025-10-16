@@ -50,7 +50,7 @@ const UploadedPgs = () => {
               <p className="pg-rent">Rent: ₹{pg.price}/month</p>
               <div className="image-previews">
                 {pg.images && pg.images.map((url, index) => (
-                  <img key={index} src={url} alt={`${pg.name} preview ${index + 1}`} />
+                  <img key={index} src={`http://localhost:5000/${url.replace(/^\//, '')}`} alt={`${pg.name} preview ${index + 1}`} />
                 ))}
               </div>
               <div className="card-actions">

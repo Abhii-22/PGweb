@@ -39,6 +39,7 @@ const PgForm = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log('Image URL from backend:', response.data.imageUrl);
       setForm(prevForm => ({ ...prevForm, images: [...prevForm.images, response.data.imageUrl] }));
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -155,7 +156,7 @@ const PgForm = () => {
               <div className="image-previews">
                 {form.images.map((url, index) => (
                   <div key={index} className="image-preview">
-                    <img src={url} alt={`preview ${index}`} />
+                    <img src={`http://localhost:5000/${url.replace(/^\//, '')}`} alt={`preview ${index}`} />
                     <button type="button" onClick={() => removeImage(index)} className="btn-remove-img">Remove</button>
                   </div>
                 ))}

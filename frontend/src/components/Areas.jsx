@@ -110,7 +110,6 @@ const Areas = () => {
               {areasData.map((area) => (
                 <div key={area.name} className="locality-section">
                   <motion.div
-                    key={area.name}
                     className="locality-card-fullscreen"
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -177,7 +176,7 @@ const Areas = () => {
                   transition={{ duration: 0.5 }}
                 >
                   {pg.images && pg.images.length > 0 && (
-                    <img src={pg.images[0]} alt={pg.name} className="pg-card-image" onClick={() => handleSelectPg(pg)} />
+                    <img src={`http://localhost:5000/${pg.images[0].replace(/^\//, '')}`} alt={pg.name} className="pg-card-image" onClick={() => handleSelectPg(pg)} />
                   )}
                   <div className={`pg-detailed-info ${!pg.images || pg.images.length === 0 ? 'no-image' : ''}`}>
                     <div className="pg-detailed-header">
@@ -193,8 +192,8 @@ const Areas = () => {
                     <div className="pg-facilities">
                       <h4 className="facilities-title">What we offer</h4>
                       <div className="facilities-grid">
-                        {pg.facilities.map(facility => (
-                          <div key={facility} className="facility-item">
+                        {pg.facilities.map((facility, index) => (
+                          <div key={index} className="facility-item">
                             {renderFacilityIcon(facility)}
                             <span>{facility}</span>
                           </div>
@@ -232,7 +231,7 @@ const Areas = () => {
             <h2 className="text-center text-primary fw-bold mt-4 mb-5">{selectedPg.name}</h2>
             <div className="pg-gallery-container">
               <motion.div className="main-image-container" key={currentImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <img src={selectedPg.images[currentImage]} alt={`${selectedPg.name} ${currentImage + 1}`} className="main-pg-image" />
+                <img src={`http://localhost:5000/${selectedPg.images[currentImage].replace(/^\//, '')}`} alt={`${selectedPg.name} ${currentImage + 1}`} className="main-pg-image" />
               </motion.div>
               <div className="thumbnail-grid">
                 {selectedPg.images.map((image, index) => (
@@ -242,7 +241,7 @@ const Areas = () => {
                     onClick={() => setCurrentImage(index)}
                     whileHover={{ scale: 1.1 }}
                   >
-                    <img src={image} alt={`${selectedPg.name} thumbnail ${index + 1}`} />
+                    <img src={`http://localhost:5000/${image.replace(/^\//, '')}`} alt={`${selectedPg.name} thumbnail ${index + 1}`} />
                   </motion.div>
                 ))}
               </div>

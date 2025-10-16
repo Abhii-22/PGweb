@@ -31,6 +31,11 @@ const tenantSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  pgOwner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PgOwner',
+    required: true,
+  },
 }, { timestamps: true });
 
 const Tenant = mongoose.model('Tenant', tenantSchema);
