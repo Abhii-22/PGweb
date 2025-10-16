@@ -14,7 +14,8 @@ const Dashboard = () => {
           console.error('No user ID found in local storage');
           return;
         }
-        const response = await axios.get(`http://localhost:5000/api/tenants?pgOwnerId=${user._id}`);
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.get(`${apiBaseUrl}/tenants?pgOwnerId=${user._id}`);
         setTenants(response.data);
       } catch (error) {
         console.error('Failed to fetch tenants:', error);

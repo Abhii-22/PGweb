@@ -37,7 +37,8 @@ const TenantForm = () => {
     };
 
     try {
-      await axios.post('http://localhost:5000/api/tenants', tenantData);
+      const apiBaseUrl = import.meta.env.VITE_API_URL;
+      await axios.post(`${apiBaseUrl}/tenants`, tenantData);
       alert('Tenant details submitted successfully!');
       setFormData({ name: '', email: '', phoneNumber: '', aadharCard: '', sharing: '', amount: '', date: '' });
       setStep(1);

@@ -14,7 +14,8 @@ const Register = () => {
     if (pgId) {
       const fetchPgDetails = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/pgs');
+          const apiBaseUrl = import.meta.env.VITE_API_URL;
+          const response = await axios.get(`${apiBaseUrl}/pgs`);
           const pgs = response.data;
           const pg = pgs.find(p => p._id === pgId);
           setSelectedPg(pg);
@@ -53,7 +54,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const apiBaseUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiBaseUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -13,7 +13,8 @@ const UploadedPgs = () => {
     const fetchPgs = async () => {
       if (!user) return;
       try {
-        const response = await axios.get(`http://localhost:5000/api/pgs/my-pgs?email=${user.email}`);
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.get(`${apiBaseUrl}/pgs/my-pgs?email=${user.email}`);
         setPgs(response.data);
         setLoading(false);
       } catch (err) {

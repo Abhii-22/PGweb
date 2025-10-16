@@ -34,7 +34,8 @@ const PgForm = () => {
     formData.append('image', file);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/upload', formData, {
+      const apiBaseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiBaseUrl}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

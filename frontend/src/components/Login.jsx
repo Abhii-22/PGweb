@@ -21,7 +21,8 @@ const Login = () => {
     e.preventDefault();
     if (formData.userType === 'pgOwner') {
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', {
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.post(`${apiBaseUrl}/auth/login`, {
           email: formData.email,
           password: formData.password,
         });

@@ -28,7 +28,8 @@ const Home = () => {
     useEffect(() => {
     const fetchAreas = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/pgs');
+            const apiBaseUrl = import.meta.env.VITE_API_URL;
+            const response = await axios.get(`${apiBaseUrl}/pgs`);
             const pgs = response.data;
             const uniqueAreaNames = [...new Set(pgs.map(pg => pg.area))];
             const areaObjects = uniqueAreaNames.map(name => ({ name }));

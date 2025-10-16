@@ -22,7 +22,8 @@ const Signup = () => {
     e.preventDefault();
     if (formData.userType === 'pgOwner') {
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/register', {
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.post(`${apiBaseUrl}/auth/register`, {
           email: formData.email,
           password: formData.password,
         });
@@ -34,7 +35,8 @@ const Signup = () => {
       }
     } else {
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/register/user', {
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.post(`${apiBaseUrl}/auth/register/user`, {
           name: formData.name,
           email: formData.email,
           password: formData.password,
