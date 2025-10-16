@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -23,7 +24,7 @@ app.use('/api/tenants', tenantRoutes);
 app.use('/api/pgs', pgRoutes);
 app.use('/', mainRoutes);
 
-const mongoURI = 'mongodb://localhost:27017/pg-website';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/pg-website';
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected successfully'))
