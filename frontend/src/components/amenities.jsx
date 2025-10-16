@@ -1,7 +1,7 @@
 // src/Amenities.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import "./Amenities.css"; // Import the CSS for styling
+import "./amenities.css"; // Import the CSS for styling
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 // Array of amenities with their icon names, labels, and links
