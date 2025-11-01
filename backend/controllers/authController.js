@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 // Generate JWT
 const generateToken = (id) => {
-  return jwt.sign({ id }, 'your_jwt_secret', { // Replace 'your_jwt_secret' with an environment variable
+  return jwt.sign({ id }, process.env.JWT_SECRET || 'your_jwt_secret', {
     expiresIn: '30d',
   });
 };
@@ -14,6 +14,11 @@ const generateToken = (id) => {
 // @access  Public
 const register = async (req, res) => {
   const { email, password } = req.body;
+
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide both email and password' });
+  }
 
   try {
     let owner = await PgOwner.findOne({ email });
@@ -37,7 +42,17 @@ const register = async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    // Handle validation errors from Mongoose
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({ message: messages.join(', ') });
+    }
+    // Handle duplicate key error
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -46,6 +61,11 @@ const register = async (req, res) => {
 // @access  Public
 const login = async (req, res) => {
   const { email, password } = req.body;
+
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide both email and password' });
+  }
 
   try {
     const owner = await PgOwner.findOne({ email }).select('+password');
@@ -68,7 +88,8 @@ const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -77,6 +98,11 @@ const login = async (req, res) => {
 // @access  Public
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
+
+  // Validate input
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Please provide name, email, and password' });
+  }
 
   try {
     let user = await User.findOne({ email });
@@ -102,7 +128,17 @@ const registerUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    // Handle validation errors from Mongoose
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({ message: messages.join(', ') });
+    }
+    // Handle duplicate key error
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -111,6 +147,11 @@ const registerUser = async (req, res) => {
 // @access  Public
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide both email and password' });
+  }
 
   try {
     const user = await User.findOne({ email }).select('+password');
@@ -134,7 +175,8 @@ const loginUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

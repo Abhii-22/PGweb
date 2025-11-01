@@ -8,7 +8,8 @@ const getPgs = async (req, res) => {
     const pgs = await Pg.find();
     res.json(pgs);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Error fetching PGs:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -21,7 +22,8 @@ const createPg = async (req, res) => {
     await newPg.save();
     res.status(201).json(newPg);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Error creating PG:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -33,7 +35,8 @@ const updatePg = async (req, res) => {
     const updatedPg = await Pg.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedPg);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Error updating PG:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -45,7 +48,8 @@ const deletePg = async (req, res) => {
     await Pg.findByIdAndDelete(req.params.id);
     res.json({ message: 'PG deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Error deleting PG:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -57,7 +61,8 @@ const getMyPgs = async (req, res) => {
     const pgs = await Pg.find({ ownerEmail: req.query.email });
     res.json(pgs);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    console.error('Error fetching user PGs:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

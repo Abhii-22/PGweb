@@ -14,7 +14,7 @@ const UploadedPgs = () => {
       if (!user) return;
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.get(`${apiBaseUrl}/pgs/my-pgs?email=${user.email}`);
+        const response = await axios.get(`${apiBaseUrl}/api/pgs/my-pgs?email=${user.email}`);
         setPgs(response.data);
         setLoading(false);
       } catch (err) {
@@ -28,7 +28,8 @@ const UploadedPgs = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/pgs/${id}`);
+      const apiBaseUrl = import.meta.env.VITE_API_URL;
+      await axios.delete(`${apiBaseUrl}/api/pgs/${id}`);
       setPgs(pgs.filter(pg => pg._id !== id));
     } catch (error) {
       console.error('Failed to delete PG:', error);
@@ -50,9 +51,10 @@ const UploadedPgs = () => {
               <p className="pg-address">{pg.location}</p>
               <p className="pg-rent">Rent: ₹{pg.price}/month</p>
               <div className="image-previews">
-                {pg.images && pg.images.map((url, index) => (
-                  <img key={index} src={`http://localhost:5000/${url.replace(/^\//, '')}`} alt={`${pg.name} preview ${index + 1}`} />
-                ))}
+                {pg.images && pg.images.map((url, index) => {
+                  const apiBaseUrl = import.meta.env.VITE_API_URL;
+                  return <img key={index} src={`${apiBaseUrl}/${url.replace(/^\//, '')}`} alt={`${pg.name} preview ${index + 1}`} />;
+                })}
               </div>
               <div className="card-actions">
                 <button className="edit-btn">Edit</button>
