@@ -22,7 +22,7 @@ const Login = () => {
     if (formData.userType === 'pgOwner') {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.post(`${apiBaseUrl}/auth/login`, {
+        const response = await axios.post(`${apiBaseUrl}/api/auth/login`, {
           email: formData.email,
           password: formData.password,
         });
@@ -35,7 +35,8 @@ const Login = () => {
     } else {
       // User login logic remains unchanged for now
       try {
-        const resp = await fetch('http://localhost:5000/api/user/login', {
+        const apiBaseUrl = import.meta.env.VITE_API_URL;
+        const resp = await fetch(`${apiBaseUrl}/api/auth/login/user`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email, password: formData.password })

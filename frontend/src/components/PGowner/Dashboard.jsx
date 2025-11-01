@@ -15,7 +15,7 @@ const Dashboard = () => {
           return;
         }
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.get(`${apiBaseUrl}/tenants?pgOwnerId=${user._id}`);
+        const response = await axios.get(`${apiBaseUrl}/api/tenants?pgOwnerId=${user._id}`);
         setTenants(response.data);
       } catch (error) {
         console.error('Failed to fetch tenants:', error);

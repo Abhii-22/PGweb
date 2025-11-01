@@ -79,7 +79,8 @@ const PgForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/pgs', pgData);
+      const apiBaseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiBaseUrl}/api/pgs`, pgData);
       alert('New PG added!');
       resetForm();
     } catch (error) {
@@ -157,7 +158,7 @@ const PgForm = () => {
               <div className="image-previews">
                 {form.images.map((url, index) => (
                   <div key={index} className="image-preview">
-                    <img src={`http://localhost:5000/${url.replace(/^\//, '')}`} alt={`preview ${index}`} />
+                    <img src={`${import.meta.env.VITE_API_URL}/${url.replace(/^\//, '')}`} alt={`preview ${index}`} />
                     <button type="button" onClick={() => removeImage(index)} className="btn-remove-img">Remove</button>
                   </div>
                 ))}

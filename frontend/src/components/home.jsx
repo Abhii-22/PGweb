@@ -29,7 +29,7 @@ const Home = () => {
     const fetchAreas = async () => {
         try {
             const apiBaseUrl = import.meta.env.VITE_API_URL;
-            const response = await axios.get(`${apiBaseUrl}/pgs`);
+            const response = await axios.get(`${apiBaseUrl}/api/pgs`);
             const pgs = response.data;
             const uniqueAreaNames = [...new Set(pgs.map(pg => pg.area))];
             const areaObjects = uniqueAreaNames.map(name => ({ name }));

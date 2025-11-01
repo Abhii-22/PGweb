@@ -23,7 +23,7 @@ const Signup = () => {
     if (formData.userType === 'pgOwner') {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.post(`${apiBaseUrl}/auth/register`, {
+        const response = await axios.post(`${apiBaseUrl}/api/auth/register`, {
           email: formData.email,
           password: formData.password,
         });
@@ -36,7 +36,7 @@ const Signup = () => {
     } else {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.post(`${apiBaseUrl}/auth/register/user`, {
+        const response = await axios.post(`${apiBaseUrl}/api/auth/register/user`, {
           name: formData.name,
           email: formData.email,
           password: formData.password,

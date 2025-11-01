@@ -31,7 +31,7 @@ const Areas = () => {
     const fetchPgsAndConstructAreas = async () => {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL;
-        const response = await axios.get(`${apiBaseUrl}/pgs`);
+        const response = await axios.get(`${apiBaseUrl}/api/pgs`);
         const pgs = response.data;
 
         const pgsByArea = pgs.reduce((acc, pg) => {
@@ -177,7 +177,7 @@ const Areas = () => {
                   transition={{ duration: 0.5 }}
                 >
                   {pg.images && pg.images.length > 0 && (
-                    <img src={`http://localhost:5000/${pg.images[0].replace(/^\//, '')}`} alt={pg.name} className="pg-card-image" onClick={() => handleSelectPg(pg)} />
+                    <img src={`${import.meta.env.VITE_API_URL}/${pg.images[0].replace(/^\//, '')}`} alt={pg.name} className="pg-card-image" onClick={() => handleSelectPg(pg)} />
                   )}
                   <div className={`pg-detailed-info ${!pg.images || pg.images.length === 0 ? 'no-image' : ''}`}>
                     <div className="pg-detailed-header">
@@ -232,7 +232,7 @@ const Areas = () => {
             <h2 className="text-center text-primary fw-bold mt-4 mb-5">{selectedPg.name}</h2>
             <div className="pg-gallery-container">
               <motion.div className="main-image-container" key={currentImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <img src={`http://localhost:5000/${selectedPg.images[currentImage].replace(/^\//, '')}`} alt={`${selectedPg.name} ${currentImage + 1}`} className="main-pg-image" />
+                <img src={`${import.meta.env.VITE_API_URL}/${selectedPg.images[currentImage].replace(/^\//, '')}`} alt={`${selectedPg.name} ${currentImage + 1}`} className="main-pg-image" />
               </motion.div>
               <div className="thumbnail-grid">
                 {selectedPg.images.map((image, index) => (
@@ -242,7 +242,7 @@ const Areas = () => {
                     onClick={() => setCurrentImage(index)}
                     whileHover={{ scale: 1.1 }}
                   >
-                    <img src={`http://localhost:5000/${image.replace(/^\//, '')}`} alt={`${selectedPg.name} thumbnail ${index + 1}`} />
+                    <img src={`${import.meta.env.VITE_API_URL}/${image.replace(/^\//, '')}`} alt={`${selectedPg.name} thumbnail ${index + 1}`} />
                   </motion.div>
                 ))}
               </div>
